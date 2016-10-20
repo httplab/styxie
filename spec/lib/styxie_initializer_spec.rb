@@ -22,6 +22,7 @@ describe Styxie::Initializer do
     controller.stub(action_name: 'index')
     result = controller.styxie_initialize
     expect(result).to include "Styxie.Initializers.ModuleTests['index']({});"
+    expect(result).to include "initStyxie();"
     expect(result.html_safe?).to be_truthy
   end
 end
