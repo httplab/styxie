@@ -5,23 +5,22 @@ module Styxie
       cfg.merge! data
     end
 
-    def styxie_initialize(klass: styxie_class, method: action_name, data: styxie_configuration, autorun: true)
+    def styxie_initialize(klass: styxie_class, method: action_name, data: styxie_configuration)
       json = data.to_json
-      init_call = autorun ? 'initStyxie();' : ''
       result = <<-CODE
 <script type="text/javascript">
 //<![CDATA[
-  function initStyxie() {
-    if (Styxie.Initializers.#{klass} && Styxie.Initializers.#{klass}.initialize)
-    {
-      Styxie.Initializers.#{klass}.initialize(#{json});
+  if (typeof Styxie === 'undefined' || Styxie === null) {
+    Styxie = {}
+  }
+  if (Styxie.applyInitializer) {
+    Styxie.applyInitializer('#{klass}', '#{method}', #{json});
+  } else {
+    if (Styxie.initQueue == null) {
+      Styxie.initQueue = []
     }
-    if (Styxie.Initializers.#{klass} && Styxie.Initializers.#{klass}['#{method}'])
-    {
-      Styxie.Initializers.#{klass}['#{method}'](#{json});
-    }
-  };
-  #{init_call}
+    Styxie.initQueue.push(['#{klass}', '#{method}', #{json}]);
+  }
 //]]>
 </script>
       CODE
