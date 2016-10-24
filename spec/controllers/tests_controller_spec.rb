@@ -6,7 +6,6 @@ describe TestsController, type: :controller do
 
   it 'index' do
     get :index
-    response.body.should have_content('Styxie.Initializers.Tests.initialize({"data":"test"})')
-    response.body.should have_content('Styxie.Initializers.Tests[\'index\']({"data":"test"})')
+    response.body.should have_content("Styxie.applyInitializer('Tests', 'index', {\"data\":\"test\"})")
   end
 end
