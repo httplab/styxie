@@ -5,8 +5,8 @@ module Styxie
       cfg.merge! data
     end
 
-    def styxie_initialize(klass: styxie_class, method: action_name, data: styxie_configuration)
-      json = data.to_json
+    def styxie_initialize(klass: styxie_class, method: action_name, data: styxie_configuration, camel_case: false)
+      json = styxie_formatted_data(data, camel_case).to_json
       result = <<-CODE
 <script type="text/javascript">
 //<![CDATA[
@@ -34,6 +34,11 @@ module Styxie
 
     def styxie_class
       controller_path.tr('/', '_').camelize
+    end
+
+    def styxie_formatted_data(data, is_camel_case)
+      return data unless is_camel_case
+      data.deep_transform_keys { |key| key.to_s.camelcase(:lower) }
     end
   end
 end

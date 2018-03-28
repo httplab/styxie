@@ -24,4 +24,18 @@ describe Styxie::Initializer do
     expect(result).to include "Styxie.applyInitializer('ModuleTests', 'index', {});"
     expect(result.html_safe?).to be_truthy
   end
+
+  describe '#styxie_formatted_data' do
+    let(:data) { { hello_world: 'data' } }
+
+    it 'camel cased' do
+      result = controller.styxie_formatted_data(data, true)
+      expect(result).to eq({ 'helloWorld' => 'data' })
+    end
+
+    it 'snake cased' do
+      result = controller.styxie_formatted_data(data, false)
+      expect(result).to eq(data)
+    end
+  end
 end
