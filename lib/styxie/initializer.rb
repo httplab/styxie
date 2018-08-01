@@ -10,16 +10,18 @@ module Styxie
       result = <<-CODE
 <script type="text/javascript">
 //<![CDATA[
-  if (typeof Styxie === 'undefined' || Styxie === null) {
-    Styxie = {}
-  }
-  if (Styxie.applyInitializer) {
-    Styxie.applyInitializer('#{klass}', '#{method}', #{json});
-  } else {
-    if (Styxie.initQueue == null) {
-      Styxie.initQueue = []
+  if (!document.documentElement.hasAttribute('data-turbolinks-preview')) {
+    if (typeof Styxie === 'undefined' || Styxie === null) {
+      Styxie = {}
     }
-    Styxie.initQueue.push(['#{klass}', '#{method}', #{json}]);
+    if (Styxie.applyInitializer) {
+      Styxie.applyInitializer('#{klass}', '#{method}', #{json});
+    } else {
+      if (Styxie.initQueue == null) {
+        Styxie.initQueue = []
+      }
+      Styxie.initQueue.push(['#{klass}', '#{method}', #{json}]);
+    }
   }
 //]]>
 </script>
