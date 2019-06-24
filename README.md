@@ -11,9 +11,26 @@ In your Gemfile, add this line:
 
     gem 'styxie'
     
-In your assets application.js include appropriate libs:
+In your Assets Pipeline javascript manifest (e.g. application.js) include appropriate libs:
 
     //= require styxie           <- Helpers and Initializers
+    
+
+**If you don't use sprockets:** 
+
+Add these lines to controller, in actions of wich you want use Styxie: 
+
+```ruby
+include Styxie::Helpers
+helper_method :styxie_include # in case of Rails
+```
+
+And add this helper in those actions:
+
+```erb
+<%= styxie_include %>
+```
+
 
 ## Basic Usage
 
