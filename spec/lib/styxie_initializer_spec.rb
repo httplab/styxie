@@ -14,12 +14,12 @@ describe Styxie::Initializer do
   it '#styxie_initialize_with' do
     expect(controller.styxie_configuration).to eq({})
     controller.styxie_initialize_with(test: 'data')
-    expect(controller.styxie_configuration).to eq({ test: 'data' })
+    expect(controller.styxie_configuration).to eq({ 'test' => 'data' })
   end
 
   it '#styxie_initialize' do
-    controller.stub(controller_path: 'module/tests')
-    controller.stub(action_name: 'index')
+    allow(controller).to receive(:controller_path).and_return('module/tests')
+    allow(controller).to receive(:action_name).and_return('index')
     result = controller.styxie_initialize
     expect(result).to include "Styxie.applyInitializer('ModuleTests', 'index', {});"
     expect(result.html_safe?).to be_truthy

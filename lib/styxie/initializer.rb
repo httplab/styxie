@@ -1,8 +1,20 @@
 # frozen_string_literal: true
 module Styxie
   module Initializer
-    def styxie_initialize_with(data, cfg: styxie_configuration)
-      cfg.merge! data
+    def styxie_initialize_with(data)
+      raise 'must be a hash' unless data.is_a?(Hash)
+
+      data = data.with_indifferent_access
+
+      # This code looks a bit weird but it is for backward compatibility with old approach when we
+      # pass cfg: as a keyword argument. I removed the keyword argument because of it does not work
+      # good with ruby 3.
+      if data[:cfg].is_a?(Hash)
+        cfg = data.delete(:cfg)
+        styxie_configuration.merge!(cfg)
+      end
+
+      styxie_configuration.merge! data
     end
 
     def styxie_initialize(klass: styxie_class, method: action_name, data: styxie_configuration, camel_case: false)

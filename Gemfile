@@ -4,7 +4,7 @@ source 'http://rubygems.org'
 gemspec
 
 group :development, :test do
-  gem 'combustion', '~> 0.3.1'
+  gem 'combustion'
   gem 'capybara'
   gem 'rspec-rails'
   gem 'rubocop'

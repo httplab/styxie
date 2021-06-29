@@ -14,7 +14,6 @@ Gem::Specification.new do |s|
   s.description = s.summary
   s.authors     = ['Yury Kotov', 'Httplab']
 
-  s.has_rdoc = false # disable rdoc generation until we've got more
   s.files         = `git ls-files`.split("\n")
   s.require_paths = ['lib']
 end

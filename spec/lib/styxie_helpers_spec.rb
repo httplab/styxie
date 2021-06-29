@@ -12,8 +12,8 @@ describe Styxie::Helpers do
   end
 
   it '#this_page?' do
-    controller.stub(controller_name: 'tests')
-    controller.stub(action_name: 'index')
+    allow(controller).to receive(:controller_name).and_return('tests')
+    allow(controller).to receive(:action_name).and_return('index')
 
     cases = [
       [
@@ -39,7 +39,7 @@ describe Styxie::Helpers do
   end
 
   it '#this_namespace?' do
-    controller.stub(controller_path: 'module/tests')
+    allow(controller).to receive(:controller_path).and_return('module/tests')
 
     cases = [
       [
